@@ -1,0 +1,66 @@
+version: "3"
+
+tasks:
+  default:
+    desc: List available tasks
+    cmds:
+      - task --list
+
+  server:build:
+    desc: Build the PocketBase server
+    dir: server
+    cmds:
+      - go build -o ../bin/server .
+
+  server:run:
+    desc: Run the PocketBase server
+    dir: server
+    cmds:
+      - go run . serve
+
+  server:dev:
+    desc: Run the PocketBase server with live reload (requires air)
+    dir: server
+    cmds:
+      - air
+
+  site:install:
+    desc: Install site dependencies
+    dir: site
+    cmds:
+      - npm install
+
+  site:dev:
+    desc: Start the Svelte+Vite dev server
+    dir: site
+    cmds:
+      - npm run dev
+
+  site:build:
+    desc: Build the Svelte site for production
+    dir: site
+    cmds:
+      - npm run build
+
+  site:preview:
+    desc: Preview the production build
+    dir: site
+    cmds:
+      - npm run preview
+
+  dev:
+    desc: Run server and site in development mode concurrently
+    deps:
+      - server:run
+      - site:dev
+
+  test:
+    desc: Run all cucumber feature tests
+    cmds:
+      - npx cucumber-js .features/**/*.feature
+
+  build:
+    desc: Build all components
+    deps:
+      - server:build
+      - site:build
