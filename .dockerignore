@@ -1,0 +1,11 @@
+.git
+.github
+.features
+node_modules
+site/node_modules
+site/.vscode
+bin/
+tofu/
+*.md
+.gitignore
+.dockerignore
